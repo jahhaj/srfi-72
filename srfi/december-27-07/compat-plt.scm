@@ -27,13 +27,19 @@
 
 ;; Just give this damn thing a binding
 
-(define assertion-violation
-  (lambda args
-    (display 'assertion-violation)
-    (newline)
-    (display args)
-    (newline)
-    (car #f)))
+(define (assertion-violation who msg . irritants)
+  (display "Assertion violation!!\n")
+  (if who
+      (begin
+        (display who)
+        (display ": ")))
+  (display msg)
+  (newline)
+  (for-each (lambda (x)
+              (write x)
+              (newline))
+            irritants)
+  (exit #f))
 
 ;(define pretty-print write)
 
