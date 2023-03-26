@@ -2364,7 +2364,7 @@
           (delete-file fn))
       (let ((p (open-output-file fn)))
         (for-each (lambda (exp)
-                    (write exp p)
+                    (pretty-print exp p)
                     (newline p))
                   exps)
         (close-output-port p)))

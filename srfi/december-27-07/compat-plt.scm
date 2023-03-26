@@ -35,13 +35,8 @@
         (display ": ")))
   (display msg)
   (newline)
-  (for-each (lambda (x)
-              (write x)
-              (newline))
-            irritants)
+  (for-each pretty-print irritants)
   (exit #f))
-
-;(define pretty-print write)
 
 ;; These are only partial implementations for specific use cases needed.
 ;; Full implementations should be provided by host implementation.
