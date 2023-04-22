@@ -1,14 +1,44 @@
 
-(library
- (testing)
- (export zzz)
- (import (only (rnrs base) let-syntax syntax-rules define-syntax cons))
+(import (rnrs))
 
- (let-syntax ((zzz (syntax-rules () ((_) (cons 1 2)))))
-   (define-syntax zzz (syntax-rules () ((_) (cons 3 4)))))
+#;(define-syntax simple
+  (lambda (x)
+    (syntax-case x ()
+      ((_ a ...) #''(a ...))
+      )))
 
- )
+#;(define-syntax too-few
+  (lambda (x)
+    (syntax-case x ()
+      ((_ b ...) #'(b))
+      )))
 
-(import (rnrs) (testing))
+#;(define-syntax too-many
+  (lambda (x)
+    (syntax-case x ()
+      ((_ c ...) #'(c ... ...))
+      )))
 
-(write (zzz))
+#;(define-syntax too-many-and-ok
+  (lambda (x)
+    (syntax-case x ()
+      ((_ (c ...) (d ...)) #''((c ... d) ...))
+      )))
+
+#;(define-syntax double-ellipsis
+  (lambda (x)
+    (syntax-case x ()
+      ((_ (e ...) ...) #''(e ... ...))
+      )))
+
+#;(define-syntax double-depth
+  (lambda (x)
+    (syntax-case x ()
+      ((_ (f ...) ...) #''((f ...) ...))
+      )))
+
+(define-syntax pairs
+  (lambda (x)
+    (syntax-case x ()
+      ((_ (a b) ...) #'(a ... b ...))
+      )))
