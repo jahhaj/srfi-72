@@ -1,4 +1,4 @@
-;; USAGE: plt-r5rs --no-prim expand.scm <library or program source file>
+;; USAGE: plt-r5rs --no-prim run.scm <library or program source file>
 
 (load "../srfi/december-27-07/compat-plt.scm")
 (load "../srfi/december-27-07/runtime.scm")

@@ -1,44 +1,22 @@
+(library
+  (test)
+  (export)
+  (import
+    (for (rnrs base) run expand (meta 2))
+    (for (rnrs syntax-case) expand (meta 2))
+    )
+ 
+  (define-syntax m
+    (lambda (x)
 
-(import (rnrs))
+      (define-syntax m2
+        (lambda (xx)
+          (syntax-case xx ()
+            ((_ a) #'(syntax-case x () ((_ b) #'(cons a b)))))))
 
-#;(define-syntax simple
-  (lambda (x)
-    (syntax-case x ()
-      ((_ a ...) #''(a ...))
-      )))
+      (m2 111)))
 
-#;(define-syntax too-few
-  (lambda (x)
-    (syntax-case x ()
-      ((_ b ...) #'(b))
-      )))
+  (m 222)
+ 
+  )
 
-#;(define-syntax too-many
-  (lambda (x)
-    (syntax-case x ()
-      ((_ c ...) #'(c ... ...))
-      )))
-
-#;(define-syntax too-many-and-ok
-  (lambda (x)
-    (syntax-case x ()
-      ((_ (c ...) (d ...)) #''((c ... d) ...))
-      )))
-
-#;(define-syntax double-ellipsis
-  (lambda (x)
-    (syntax-case x ()
-      ((_ (e ...) ...) #''(e ... ...))
-      )))
-
-#;(define-syntax double-depth
-  (lambda (x)
-    (syntax-case x ()
-      ((_ (f ...) ...) #''((f ...) ...))
-      )))
-
-(define-syntax pairs
-  (lambda (x)
-    (syntax-case x ()
-      ((_ (a b) ...) #'(a ... b ...))
-      )))
