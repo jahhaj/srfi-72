@@ -1,22 +1,28 @@
 (library
   (test)
-  (export)
+  (export m)
   (import
-    (for (rnrs base) run expand (meta 2))
-    (for (rnrs syntax-case) expand (meta 2))
+    (only (rnrs base) define-syntax vector)
+    (for (only (rnrs base) lambda) expand)
+    (for (only (rnrs syntax-case) syntax-case syntax ...) expand)
     )
  
+  (define-syntax pm
+    (lambda (x)
+      (syntax-case x ()
+        ((_ b ...)
+         #'(vector b ... b ...)))))
+         
   (define-syntax m
     (lambda (x)
-
-      (define-syntax m2
-        (lambda (xx)
-          (syntax-case xx ()
-            ((_ a) #'(syntax-case x () ((_ b) #'(cons a b)))))))
-
-      (m2 111)))
-
-  (m 222)
+      (syntax-case x ()
+        ((_ b ...)
+         #'(pm b ...)))))
  
   )
+
+(import (rnrs) (test))
+
+(write (m 1 2 3))
+(newline)
 
